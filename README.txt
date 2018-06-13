@@ -1,5 +1,5 @@
 
-This is the README file of “Smart array” program developed by
+This is the README file of “List” program developed by
 Sevak Martirosyan and Sevak Sahakyan.
 
 CONTENTS

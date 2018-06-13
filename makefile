@@ -22,7 +22,7 @@ deps/%.dep : src/%.cpp
 clean :
 	@echo "cleaning up"
 	@rm -rf  deps obj bin docs/doxygen test_results.txt
-	#@$(foreach dir,$(TESTS), @$(MAKE) -C $(dir) clean;)
+	@$(foreach dir,$(TESTS), @$(MAKE) -C $(dir) clean;)
 	
 docs : 
 	@mkdir -p docs/doxygen
