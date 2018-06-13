@@ -1,1 +1,0 @@
-deps/list.dep  deps/list.o: src/list.cpp src/list.hpp
