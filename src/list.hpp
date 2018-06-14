@@ -1,3 +1,5 @@
+#ifndef LIST_HPP
+#define LIST_HPP
 /**
  *@brief Node stores integer value and pointers 
          to the previous and next node
@@ -19,7 +21,7 @@ class Node
  */
 class List
 {
-    private:
+    protected:
         Node* first;
         Node* last;
         unsigned int count;
@@ -123,3 +125,4 @@ class List
          ~List();
 
 };
+#endif

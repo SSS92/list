@@ -22,7 +22,9 @@ deps/%.dep : src/%.cpp
 clean :
 	@echo "cleaning up"
 	@rm -rf  deps obj bin docs/doxygen test_results.txt
-	@$(foreach dir,$(TESTS), @$(MAKE) -C $(dir) clean;)
+	@for dir in $(TESTS); do \
+	        $(MAKE) -C $$dir clean ; \
+	        done
 	
 docs : 
 	@mkdir -p docs/doxygen
@@ -30,4 +32,6 @@ docs :
 
 test : 
 	@touch test_results.txt
-	@$(foreach dir,$(TESTS), @$(MAKE) -C $(dir);)
+	@for dir in $(TESTS); do \
+	        $(MAKE) -C $$dir; \
+	        done

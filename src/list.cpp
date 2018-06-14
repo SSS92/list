@@ -27,11 +27,11 @@ Node* List::get_node(unsigned int i) const
     int k = 0;
     Node* c = first;
     while (k < i) {
-         if (NULL == c) {
+        if (NULL == c) {
             return c;
-         }
-         c = c->next;
-         ++k;
+        }
+        c = c->next;
+        ++k;
     }
     return c;
 }
@@ -43,7 +43,8 @@ List::List()
 
 List::List(int v)
 {
-    Node* n = new Node(v); 
+    Node* n = new Node(v);
+    assert(NULL != n); 
     first = n;
     last = n;
     count = 1;
@@ -51,23 +52,20 @@ List::List(int v)
 
 List::List(const List& l)
 {
-    int size = l.get_size();
-    if (0 == size) {
-        count = 0;
-        first = NULL;
-        last = NULL;
-    } else {
-        for (int i = 0; i < size; ++i) {
-            Node* c = l.get_node(i);
-            add(i, c->value);
-        }
+    count = 0;
+    first = NULL;
+    last = NULL;
+    Node* n = l.first;
+    while (NULL != n) {
+        add_to_end(n->value);
+        n = n->next;
     }
 }
 
 void List::add_to_end(int v)
 {
-    std::cout << "I am here" << std::endl;
     Node* n = new Node(v);
+    assert(NULL != n); 
     if (0 == count) {
         last = n;
         first = n;
@@ -84,6 +82,7 @@ void List::add_to_end(int v)
 void List::add_to_start(int v)
 {
     Node* n = new Node(v);
+    assert(NULL != n); 
     n->next = first;
     first->previous = n;
     first = n;
@@ -93,24 +92,29 @@ void List::add_to_start(int v)
 
 bool List::add(unsigned int i, int v)
 {
-    Node* n = new Node(v);
-    if (i >= count) {
+    if((0 != i) && is_out_of_list(i - 1)){
         return false;
     }
-    if (i = count - 1) {
+    if(0 == count || count == i){
         add_to_end(v);
-        return;
+        return true;
     } 
     if (0 == i) {
         add_to_start(v); 
-        return;
-    }
+        return true;
+    } 
+    Node* n = new Node(v);
+    assert(NULL != n);
     Node* c = get_node(i);
+    Node* p = c->previous;
+    if(p) {
+        p->next = n;
+        n->previous = p;
+    }
     n->next = c;
-    n->previous = c->previous;
-    (c->previous)->next = n;
     c->previous = n;
     ++count;
+    return true;
 }
 
 bool List::remove(unsigned int i)
@@ -124,6 +128,7 @@ bool List::remove(unsigned int i)
         first->next = NULL;
         delete first;
         first = n;
+        --count;
         return true;
     }
     if (i == (count - 1)) {
@@ -131,7 +136,8 @@ bool List::remove(unsigned int i)
         Node* n = last->previous;
         last->previous = NULL;
         delete last;
-        last = n; 
+        last = n;
+        --count;
         return true;
     }
     Node* c = get_node(i);
@@ -159,7 +165,7 @@ int List::search_by_value (int v) const
 int List::search_by_index (unsigned int i) const
 {
     if (is_out_of_list(i)) {
-         throw std::out_of_range ("index is out of range\n");
+        throw std::out_of_range ("index is out of range\n");
     }
     Node* c = get_node(i);
     return c->value;
@@ -211,18 +217,15 @@ bool List::swap(unsigned int i, unsigned int j)
 }
 
 List& List::operator=(const List& l)
-{    
-    int size = l.get_size();
-    if (0 == size) {
-        count = 0;
-        first = NULL;
-        last = NULL;
-    } else {
-        for (int i = 0; i < size; ++i) {
-            Node* c = l.get_node(i);
-            add(i, c->value);
-        }
-    }                    
+{   
+    count = 0;
+    first = NULL;
+    last = NULL;
+    Node* n = l.first;
+    while (NULL != n) {
+        add_to_end(n->value);
+        n = n->next;
+    } 
     return *this;
 }
 

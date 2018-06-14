@@ -1,5 +1,5 @@
 #include <list.hpp>
-#include <swap_test.hpp>
+#include <add_test.hpp>
 #include <iostream>
 
 /**
@@ -11,6 +11,6 @@ int main(){
     l.add(2, 8);
     l.add(3, 1);
     l.add(4, 6);
-    test_swap(l);
+    test_add(l);
 	return 0;
 }
