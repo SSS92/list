@@ -8,9 +8,8 @@ class Node
         int value;
         Node* next;
         Node* previous;
-        Node();
+        
         Node(int v = 0);
-
         ~Node();
 };
 
@@ -24,8 +23,14 @@ class List
         Node* first;
         Node* last;
         unsigned int count;
+        
         bool is_out_of_list(unsigned int i) const;
-        Node* iterate(unsigned int i) const;
+        
+        Node* get_node(unsigned int i) const;
+         
+        void add_to_end(int v);
+
+        void add_to_start(int v); 
 
     public:
         /**
@@ -45,10 +50,7 @@ class List
          *@brief List's default constructor
          */ 
         List(const List& l);
-	void add_to_end(int v);
-
-	void add_to_start(int v);
-
+        
         /**
          *@brief Adds new node(initialized by second param) to the list
          by index, if index is > than count: index = count
@@ -57,11 +59,12 @@ class List
          *@return true - if a new node added successfuly,
          false - otherwise
          */
-        void add(unsigned int i = 0, int v = 0);
+        bool add(unsigned int i, int v);
 
         /**
          *@brief Removes a node from list by index
          *@param index of element which will be remove
+         *@return true if index is valid, false otherwise
          */
         bool remove(unsigned int i);
 
@@ -76,7 +79,7 @@ class List
         /**
          *@brief Returns element value by index
          *@param element index
-         *@return element value ,  -1 if out of list
+         *@return element value
          */
         int search_by_index(unsigned int i) const;
 
