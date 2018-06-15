@@ -5,6 +5,6 @@
  */
 void write_log (const char*);
 
-void test_add (List l);
+void test_remove (List l);
 
-bool check_add(List l, unsigned int i, int v);
+bool check_remove(List l, unsigned int i);
